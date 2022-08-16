@@ -1,16 +1,7 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
+import { screen } from '@testing-library/react';
 import { About } from '../pages';
-
-const renderWithRouter = (component) => {
-  const history = createMemoryHistory();
-  return ({
-    ...render(<Router history={ history }>{component}</Router>), history,
-  });
-};
-export default renderWithRouter;
+import renderWithRouter from './App.test';
 
 describe('Testes do componente <Abount.js />', () => {
   test('A pagina About deve conter o texto About Pokédex', () => {
@@ -21,7 +12,8 @@ describe('Testes do componente <Abount.js />', () => {
 
   test('Testa se a imagem está correta', () => {
     renderWithRouter(<About />);
-    const aboutImage = screen.getByRole('img', { name: /Pokédex/i });
-    expect(aboutImage).toBeInTheDocument();
+    const aboutImage = screen.getByAltText(/pokédex/i);
+    expect(aboutImage.src)
+      .toContain('https://cdn2.bulbagarden.net/upload/thumb/8/86/Gen_I_Pok%C3%A9dex.png/800px-Gen_I_Pok%C3%A9dex.png');
   });
 });
