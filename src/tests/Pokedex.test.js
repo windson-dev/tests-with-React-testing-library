@@ -29,6 +29,17 @@ describe('Testes do componente <Pokedex.js />', () => {
     expect(dragonButtonName.textContent).toBe('Dragon');
   });
 
+  test('Testa se os botões possuem data-testid, EXCETO o botão ALL', () => {
+    renderWithRouter(<Pokedex
+      pokemons={ pokemons }
+      isPokemonFavoriteById={ false }
+    />);
+
+    const getButtonAll = screen.getAllByTestId('pokemon-type-button');
+    const lengthButtonsWithTestId = 7;
+    expect(getButtonAll).toHaveLength(lengthButtonsWithTestId);
+  });
+
   test('Testa se é possivel clicar no botão ALL', () => {
     renderWithRouter(<Pokedex
       pokemons={ pokemons }
